@@ -2,14 +2,14 @@ import React from 'react';
 import CompleteHeader from './Header/CompleteHeader';
 
 
-const Dashboard = () => {
+const Settings = () => {
   return (
     <CompleteHeader>
       <div>
-        <h1>Clarity: briding the gap between employees and employers</h1>
+        <h1>Settings</h1>
       </div>
     </CompleteHeader>
   );
 };
 
-export default Dashboard;
+export default Settings;
