@@ -20,7 +20,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Add from "@mui/icons-material/Add";
 import CompleteHeader from "./Header/CompleteHeader";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const API = "https://dh-backend-fr-fd4331759334.herokuapp.com";
 
 const CreateForm = () => {
   const [open, setOpen] = useState(true);
@@ -33,9 +36,9 @@ const CreateForm = () => {
 
   useEffect(() => {
     if (!open) {
-      navigate('/')
+      navigate("/");
     }
-  }, [open])
+  }, [open]);
 
   const handleOptionChange = (event) => {
     setCategory(event.target.value);
@@ -47,7 +50,7 @@ const CreateForm = () => {
 
   const handleClose = () => {
     setOpen(false);
-    navigate('/');
+    navigate("/");
   };
 
   const handleTitle = (event) => {
@@ -76,10 +79,32 @@ const CreateForm = () => {
     //  console.log(question);
   };
 
-  const handleSubmit = (event) => {
-    handleQuestion();
+  const handleSubmit = async (event) => {
+    // handleQuestion();
     event.preventDefault();
-    handleClose();
+    var userStr = localStorage.getItem("user");
+    var user = JSON.parse(userStr);
+
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    const mysqlDate = `${year}-${month}-${day}`;
+
+    console.log(mysqlDate); // This will print today's date in MySQL date format
+
+    const res = await axios.post(API + "/form", {
+      title: title,
+      curr_date: mysqlDate,
+      form_description: description,
+      employer_id: user.employer_id,
+      questions: question,
+    });
+    alert("form sent!")
+    // use email API to send to all employees
+    
     navigate('/');
   };
 

@@ -46,6 +46,9 @@ const ViewForms = () => {
     const dataWithName = averages.find((item) => item.form_id === form_id);
     setOpenForm(dataWithName);
   };
+  // const reversed = averages.slice().reverse();
+
+  // setAverages(reversed)
   return (
     <CompleteHeader>
       <Box
@@ -70,7 +73,7 @@ const ViewForms = () => {
           aria-label="main mailbox folders"
           style={{ width: "100%", overflow: "auto" }}
         >
-          {averages.map((item) => (
+          {averages.slice().reverse().map((item) => (
             <ListItem
               key={item.name}
               onClick={() => handleClick(item.form_id)}
