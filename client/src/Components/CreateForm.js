@@ -79,6 +79,52 @@ const CreateForm = () => {
     //  console.log(question);
   };
 
+  const sendEmail = async (form_id) => {
+    // "/employee/:formID/:employeeID"
+    const apiKey = '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';
+    const brevoApiEndpoint = 'https://api.sendinblue.com/v3/smtp/email';
+    var userStr = localStorage.getItem("user");
+    var user = JSON.parse(userStr);
+    const pplToSend = await axios.get(API + '/employer/employees?employer_id=' + user.employer_id)
+    var ppl = pplToSend.data;
+    var fin = []
+    for (let person of ppl) {
+      let obj = {email: person.email, name: person.full_name, id: person.employee_id}
+      fin.push(obj);
+    }
+    console.log(fin);
+    for (let person of fin) {
+      const emailPayload = {
+        sender: {
+          email: 'claritydonotreply@gmail.com',
+          name: user.employer_name,
+        },
+        to: [
+          {
+            email: person.email,
+            name: person.full_name,
+          },
+        ],
+        subject: 'Clarity: New Form!',
+        textContent: 'link here',
+        htmlContent: `<h5>Your Clarity Form Link! Fill it out here: ${`http://localhost:3000/employee/` + form_id + '/' + person.id}</h5>`, // i wanna send out a different link to each person in the list
+      };
+      console.log("payload declared")
+      try {
+        const response = await axios.post(brevoApiEndpoint, emailPayload, {
+          headers: {
+            'api-key': apiKey,
+          },
+        });
+    
+        console.log('Email sent successfully:', response.data);
+      } catch (error) {
+        console.error('Failed to send email:', error.response.data);
+      }
+    }
+
+  }
+
   const handleSubmit = async (event) => {
     // handleQuestion();
     event.preventDefault();
@@ -102,6 +148,13 @@ const CreateForm = () => {
       employer_id: user.employer_id,
       questions: question,
     });
+    try {
+      const id = res.data.form_id;
+      await sendEmail(id)
+    } catch (e) {
+
+    }
+
     alert("form sent!")
     // use email API to send to all employees
     
