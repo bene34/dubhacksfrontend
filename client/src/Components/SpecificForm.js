@@ -42,7 +42,7 @@ const SpecificForm = ({ item }) => {
 
   useEffect(() => {
     var obj = [
-      { name: "work life balance", value: item.wlb || 0 },
+      { name: "work life bal.", value: item.wlb || 0 },
       { name: "overall", value: item.overall || 0 },
       { name: "transparency", value: item.transparency || 0 },
       { name: "culture", value: item.culture || 0 },
@@ -62,10 +62,10 @@ const SpecificForm = ({ item }) => {
       <DialogTitle>Form Averages</DialogTitle>
       <BarChart width={400} height={300} data={relData}>
         <XAxis dataKey="name" />
-        <YAxis />
+        <YAxis domain={[0, 7]} />
         <Tooltip />
         <Legend />
-        <Bar dataKey="value" fill="#8884d8" />
+        <Bar dataKey="value" fill="#E66E15" />
       </BarChart>
     </Dialog>
   );

@@ -15,14 +15,14 @@ function App() {
     <Router>
       <div>
         <Routes>
-        <Route path="/" element = {<Dashboard />}></Route>
+        <Route path="/" element = {<Login />}></Route>
           <Route path="/createform" element = {<CreateForm />}></Route>
           <Route path="/viewform" element = {<ViewForms />}></Route>
           <Route path="/specificform" element = {<SpecificForm />}></Route>
           <Route path="/settings" element = {<Settings />}></Route>
           <Route path="/invite" element = {<Invite />}></Route>
           <Route path="/createacct" element = {<CreateAccount />}></Route>
-          <Route path="/login" element = {<Login />}></Route>
+          <Route path="/dashboard" element = {<Dashboard />}></Route>
           <Route path="/employee/:formID/:employeeID" element = {<EmployeeForm />}></Route>
         </Routes>
       </div>

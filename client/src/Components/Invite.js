@@ -22,12 +22,12 @@ const Invite = () => {
 
     const submit = async () => {
         if(!emailText.includes('@') || emailText.length < 5 || nameText.length < 6) {
-            enqueueSnackbar('please format your input properly', { variant: "error" });
+            enqueueSnackbar('Please format your input properly', { variant: "error" });
         }
         else {
             //Call API here
             //on success call the success toast
-            enqueueSnackbar('Employee invitied', { variant: "success" });
+            // enqueueSnackbar('Employee invitied', { variant: "success" });
             var userStr = localStorage.getItem('user')
             var user = JSON.parse(userStr)
             const id = user.employer_id;
@@ -37,11 +37,11 @@ const Invite = () => {
                 email: emailText,
                 full_name: nameText
               })
-              alert("employee added!")
-              window.location.reload();
+              // alert("employee added!")
               enqueueSnackbar('Employee invitied', { variant: "success" });
+              window.location.reload();
             } catch (e) {
-              alert("duplicate email, employee already exists")
+              enqueueSnackbar('Duplicates are not allowed', { variant: "error" });
               window.location.reload();
             }
           }

@@ -21,6 +21,8 @@ import Select from "@mui/material/Select";
 import Add from "@mui/icons-material/Add";
 import CompleteHeader from "./Header/CompleteHeader";
 import { useNavigate } from "react-router-dom";
+import { SnackbarProvider, enqueueSnackbar } from 'notistack';
+
 // import dotenv from 'dotenv'
 // dotenv.config()
 import axios from "axios";
@@ -38,7 +40,7 @@ const CreateForm = () => {
 
   useEffect(() => {
     if (!open) {
-      navigate("/");
+      navigate("/dashboard");
     }
   }, [open]);
 
@@ -52,7 +54,7 @@ const CreateForm = () => {
 
   const handleClose = () => {
     setOpen(false);
-    navigate("/");
+    navigate("/dashboard");
   };
 
   const handleTitle = (event) => {
@@ -72,7 +74,12 @@ const CreateForm = () => {
   };
 
   const handleQuestion = () => {
+    if (title === "" || description === "" || questionTitle === "" || category === "") {
+      enqueueSnackbar('Blank entries are not allowed', { variant: "error" });
+      return;
+    }
     const object = { question: questionTitle, questionCategory: category };
+
     //  console.log(object)
     setQuestion([...question, object]);
     setQuestionTitle("");
@@ -124,14 +131,19 @@ const CreateForm = () => {
         console.log('Email sent successfully:', response.data);
       } catch (error) {
         console.error('Failed to send email:', error.response.data);
+        return;
       }
     }
-
+    enqueueSnackbar('Emails sent', { variant: "success" });
   }
 
   const handleSubmit = async (event) => {
     // handleQuestion();
     event.preventDefault();
+    if (title === "" || description === "" || question.length === 0) {
+      enqueueSnackbar('Blank entries are not allowed', { variant: "error" });
+      return
+    }
     var userStr = localStorage.getItem("user");
     var user = JSON.parse(userStr);
 
@@ -156,17 +168,17 @@ const CreateForm = () => {
       const id = res.data.form_id;
       await sendEmail(id)
     } catch (e) {
-
+      console.log(e.message);
     }
 
-    alert("form sent!")
+    // alert("form sent!")
     // use email API to send to all employees
-    
-    navigate('/');
+    navigate('/dashboard');
   };
 
   return (
     <CompleteHeader>
+      <SnackbarProvider />
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Create New Form</DialogTitle>
         <DialogContent>

@@ -37,6 +37,10 @@ const CreateAccount = () => {
     // navigate('/createacct');
     window.location.reload();
   };
+  const goLogin = () => {
+    navigate('/');
+  }
+
   const onSubmit = async () => {
     try {
         const res = await axios.post(API + '/employer', {
@@ -52,7 +56,7 @@ const CreateAccount = () => {
         set_email("")
         set_size("")
         set_industry("")
-        navigate("/login")
+        navigate("/")
     } catch (e) {
         alert("duplicate email")
     }
@@ -125,6 +129,7 @@ const CreateAccount = () => {
             }}
           />
           <DialogActions>
+            <Button onClick={goLogin}>Log In</Button>
             <Button onClick={onSubmit}>Submit</Button>
           </DialogActions>
         </form>

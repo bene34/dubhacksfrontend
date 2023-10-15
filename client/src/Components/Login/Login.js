@@ -40,6 +40,10 @@ const Login = (props) => {
         setOpen(false);
         window.location.reload();
       };
+
+    const goSignup = () => {
+      navigate('/createacct')
+    }
     const doLogin = async () => {
         // var email = email.toLowerCase();
         try {
@@ -95,6 +99,7 @@ const Login = (props) => {
             />
 
             <DialogActions>
+              <Button onClick={goSignup}>Sign Up</Button>
               <Button onClick={doLogin}>Login</Button>
             </DialogActions>
           </form>
