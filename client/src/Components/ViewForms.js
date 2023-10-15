@@ -88,7 +88,7 @@ const ViewForms = () => {
           >
             Name: {item.name}, Date: {item.date}
           </ListItem>
-        ))}
+        ))} 
       </List>
       {openForm && 
       <SpecificForm item={openForm}/>}  
