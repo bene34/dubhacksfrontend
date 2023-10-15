@@ -6,8 +6,13 @@ import CreateIcon from '@mui/icons-material/Create';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { Link} from 'react-router-dom';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
-
+import axios from 'axios';
+const API = "https://dh-backend-fr-fd4331759334.herokuapp.com"
 const Sidebar = () => {
+    const signout = async () => {
+        await axios.post(API + '/auth/logout');
+        localStorage.clear();
+    }
   return (
     <Drawer variant="permanent">
       <List>
@@ -49,6 +54,14 @@ const Sidebar = () => {
                     <PersonAddAlt1Icon />
                 </ListItemIcon>
             <ListItemText primary="New Employee" />
+            </ListItemButton>
+        </ListItem>
+        <ListItem >
+            <ListItemButton component={Link} onClick={signout} to={'/login'}>
+                <ListItemIcon>
+                    <PersonAddAlt1Icon />
+                </ListItemIcon>
+            <ListItemText primary="Sign Out" />
             </ListItemButton>
         </ListItem>
       </List>
