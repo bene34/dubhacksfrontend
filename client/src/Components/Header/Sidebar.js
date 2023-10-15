@@ -6,6 +6,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { Link} from 'react-router-dom';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import PersonRemove from '@mui/icons-material/PersonRemove';
 import axios from 'axios';
 const API = "https://dh-backend-fr-fd4331759334.herokuapp.com"
 const Sidebar = () => {
@@ -35,21 +36,21 @@ const Sidebar = () => {
             </ListItemButton>
         </ListItem>
         <ListItem >
-            <ListItemButton>
+            <ListItemButton component={Link} to={'/viewform'}>
                 <ListItemIcon>
                     <DescriptionIcon />
                 </ListItemIcon>
             <ListItemText primary="View Past Forms" />
             </ListItemButton>
         </ListItem>
-        <ListItem >
+        {/* <ListItem >
             <ListItemButton component={Link} to={'/settings'}>
                 <ListItemIcon>
                     <SettingsIcon />
                 </ListItemIcon>
             <ListItemText primary="Settings" />
             </ListItemButton>
-        </ListItem>
+        </ListItem> */}
         <ListItem >
             <ListItemButton component={Link} to={'/invite'}>
                 <ListItemIcon>
@@ -61,7 +62,7 @@ const Sidebar = () => {
         <ListItem >
             <ListItemButton component={Link} onClick={signout} to={'/login'}>
                 <ListItemIcon>
-                    <PersonAddAlt1Icon />
+                    <PersonRemove />
                 </ListItemIcon>
             <ListItemText primary="Sign Out" />
             </ListItemButton>

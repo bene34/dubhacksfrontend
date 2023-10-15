@@ -18,3 +18,6 @@ export const getCompanyAverages = async (companyId) => {
         throw new Error(err);
     });
 }
+
+
+

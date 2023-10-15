@@ -55,7 +55,7 @@ const Login = (props) => {
                     Authorization: `Bearer ${accessToken}`
                 }
             })
-            localStorage.setItem("user", getUserRes.data)
+            localStorage.setItem("user", JSON.stringify(getUserRes.data))
             console.log("user is logged in")
             navigate("/invite")
         } catch (e) {
