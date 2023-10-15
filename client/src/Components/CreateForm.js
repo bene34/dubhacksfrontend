@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -31,6 +31,12 @@ const CreateForm = () => {
   const [question, setQuestion] = useState([]);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!open) {
+      navigate('/')
+    }
+  }, [open])
+
   const handleOptionChange = (event) => {
     setCategory(event.target.value);
   };
@@ -41,6 +47,7 @@ const CreateForm = () => {
 
   const handleClose = () => {
     setOpen(false);
+    navigate('/');
   };
 
   const handleTitle = (event) => {
