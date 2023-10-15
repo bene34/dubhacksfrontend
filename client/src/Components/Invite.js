@@ -16,6 +16,7 @@ const Invite = () => {
         else {
             //Call API here
             //on success call the success toast
+            enqueueSnackbar('Employee invitied', { variant: "success" });
         }
     }
 

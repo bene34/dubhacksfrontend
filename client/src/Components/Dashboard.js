@@ -33,7 +33,8 @@ const Dashboard = () => {
       var transSum = 0;
       var overall = 0;
       var overallSum = 0;
-      const report = await getCompanyAverages(4);
+      
+      const report = await getCompanyAverages(localStorage.getItem(user).employer_id);
       report.forEach(e => {
         if(e.culture) {
           culture += parseFloat(e.culture);
@@ -75,7 +76,7 @@ const Dashboard = () => {
           <YAxis domain={[0, 7]} />
           <Tooltip />
           <Legend />
-          <Bar dataKey="value" fill="#8884d8" />
+          <Bar dataKey="value" fill="#E66E15" />
         </BarChart>
       </ResponsiveContainer>
       </div>

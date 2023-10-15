@@ -7,6 +7,7 @@ import Settings from './Components/Settings';
 import Invite from './Components/Invite';
 import CreateAccount from './Components/CreateAccount/CreateAccount.js';
 import Login from './Components/Login/Login.js';
+import EmployeeForm from './Components/EmployeeForm.js';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/invite" element = {<Invite />}></Route>
           <Route path="/createacct" element = {<CreateAccount />}></Route>
           <Route path="/login" element = {<Login />}></Route>
+          <Route path="/employee/:formID/:employeeID" element = {<EmployeeForm />}></Route>
         </Routes>
       </div>
     </Router>
