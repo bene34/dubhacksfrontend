@@ -12,6 +12,8 @@ const Sidebar = () => {
     const signout = async () => {
         await axios.post(API + '/auth/logout');
         localStorage.clear();
+        console.log(localStorage.getItem('user')) // should be null 
+        console.log(localStorage.getItem("access_token")) // should also be null
     }
   return (
     <Drawer variant="permanent">
