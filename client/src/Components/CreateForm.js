@@ -21,6 +21,8 @@ import Select from "@mui/material/Select";
 import Add from "@mui/icons-material/Add";
 import CompleteHeader from "./Header/CompleteHeader";
 import { useNavigate } from "react-router-dom";
+// import dotenv from 'dotenv'
+// dotenv.config()
 import axios from "axios";
 
 const API = "https://dh-backend-fr-fd4331759334.herokuapp.com";
@@ -81,7 +83,7 @@ const CreateForm = () => {
 
   const sendEmail = async (form_id) => {
     // "/employee/:formID/:employeeID"
-    const apiKey = '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';
+    const apiKey = process.env.API_KEY;
     const brevoApiEndpoint = 'https://api.sendinblue.com/v3/smtp/email';
     var userStr = localStorage.getItem("user");
     var user = JSON.parse(userStr);
