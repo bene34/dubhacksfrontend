@@ -43,7 +43,7 @@ const SpecificForm = ({ item }) => {
   useEffect(() => {
     var obj = [
       { name: "work life balance", value: item.wlb || 0 },
-      { name: "culture", value: item.culture || 0 },
+      { name: "overall", value: item.overall || 0 },
       { name: "transparency", value: item.transparency || 0 },
       { name: "culture", value: item.culture || 0 },
     ];

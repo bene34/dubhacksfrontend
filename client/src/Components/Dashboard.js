@@ -34,7 +34,7 @@ const Dashboard = () => {
       var overall = 0;
       var overallSum = 0;
       
-      const report = await getCompanyAverages(localStorage.getItem(user).employer_id);
+      const report = await getCompanyAverages(JSON.parse(localStorage.getItem("user")).employer_id);
       report.forEach(e => {
         if(e.culture) {
           culture += parseFloat(e.culture);
