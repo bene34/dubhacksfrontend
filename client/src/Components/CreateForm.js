@@ -83,7 +83,9 @@ const CreateForm = () => {
 
   const sendEmail = async (form_id) => {
     // "/employee/:formID/:employeeID"
-    const apiKey = process.env.API_KEY;
+    var apiKey = await axios.get('https://api-key-getter.onrender.com/');
+    apiKey = apiKey.data.key
+    console.log('apiKey: ' + apiKey)
     const brevoApiEndpoint = 'https://api.sendinblue.com/v3/smtp/email';
     var userStr = localStorage.getItem("user");
     var user = JSON.parse(userStr);
