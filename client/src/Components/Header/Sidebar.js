@@ -20,7 +20,7 @@ const Sidebar = () => {
     <Drawer variant="permanent">
       <List>
       <ListItem >
-            <ListItemButton>
+            <ListItemButton component={Link} to={'/'}>
                 <ListItemIcon>
                     <Home />
                 </ListItemIcon>
