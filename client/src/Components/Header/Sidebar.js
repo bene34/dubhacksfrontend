@@ -20,7 +20,7 @@ const Sidebar = () => {
             </ListItemButton>
         </ListItem>
         <ListItem >
-            <ListItemButton>
+            <ListItemButton component={Link} to={'/createform'} >
                 <ListItemIcon>
                     <CreateIcon />
                 </ListItemIcon>
