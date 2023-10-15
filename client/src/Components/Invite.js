@@ -1,15 +1,26 @@
-import {React, useState,} from 'react';
+import {React, useState, useEffect} from 'react';
 import CompleteHeader from './Header/CompleteHeader';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+const API = "https://dh-backend-fr-fd4331759334.herokuapp.com"
 
 const Invite = () => {
     const [emailText, setEmailText] = useState('');
     const [nameText, setNameText] = useState('');
+    const navigate = useNavigate();
 
-    const submit = () => {
+  useEffect(() => {
+    if (nameText === '') {
+      navigate('/invite')
+    }
+  }, [nameText])
+
+    const submit = async () => {
         if(!emailText.includes('@') || emailText.length < 5 || nameText.length < 6) {
             enqueueSnackbar('please format your input properly', { variant: "error" });
         }
@@ -17,15 +28,30 @@ const Invite = () => {
             //Call API here
             //on success call the success toast
             enqueueSnackbar('Employee invitied', { variant: "success" });
+            var userStr = localStorage.getItem('user')
+            var user = JSON.parse(userStr)
+            const id = user.employer_id;
+            try {
+              const res = await axios.post(API + '/employee', {
+                employer_id: id,
+                email: emailText,
+                full_name: nameText
+              })
+              alert("employee added!")
+              window.location.reload();
+              enqueueSnackbar('Employee invitied', { variant: "success" });
+            } catch (e) {
+              alert("duplicate email, employee already exists")
+              window.location.reload();
+            }
+          }
         }
-    }
-
   return (
     <CompleteHeader>
       <div>
         <SnackbarProvider />
         <Typography variant = "h4">Let's grow your team, invite a new employee!</Typography>
-        <Typography variant="subtitle1">Email Adress: </Typography>
+        <Typography variant="subtitle1">Email Address: </Typography>
         <TextField
         label="Work email"
         placeholder="Work email"

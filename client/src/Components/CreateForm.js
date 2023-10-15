@@ -20,7 +20,12 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Add from "@mui/icons-material/Add";
 import CompleteHeader from "./Header/CompleteHeader";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+// import dotenv from 'dotenv'
+// dotenv.config()
+import axios from "axios";
+
+const API = "https://dh-backend-fr-fd4331759334.herokuapp.com";
 
 const CreateForm = () => {
   const [open, setOpen] = useState(true);
@@ -33,9 +38,9 @@ const CreateForm = () => {
 
   useEffect(() => {
     if (!open) {
-      navigate('/')
+      navigate("/");
     }
-  }, [open])
+  }, [open]);
 
   const handleOptionChange = (event) => {
     setCategory(event.target.value);
@@ -47,7 +52,7 @@ const CreateForm = () => {
 
   const handleClose = () => {
     setOpen(false);
-    navigate('/');
+    navigate("/");
   };
 
   const handleTitle = (event) => {
@@ -76,10 +81,87 @@ const CreateForm = () => {
     //  console.log(question);
   };
 
-  const handleSubmit = (event) => {
-    handleQuestion();
+  const sendEmail = async (form_id) => {
+    // "/employee/:formID/:employeeID"
+    var apiKey = await axios.get('https://api-key-getter.onrender.com/');
+    apiKey = apiKey.data.key
+    console.log('apiKey: ' + apiKey)
+    const brevoApiEndpoint = 'https://api.sendinblue.com/v3/smtp/email';
+    var userStr = localStorage.getItem("user");
+    var user = JSON.parse(userStr);
+    const pplToSend = await axios.get(API + '/employer/employees?employer_id=' + user.employer_id)
+    var ppl = pplToSend.data;
+    var fin = []
+    for (let person of ppl) {
+      let obj = {email: person.email, name: person.full_name, id: person.employee_id}
+      fin.push(obj);
+    }
+    console.log(fin);
+    for (let person of fin) {
+      const emailPayload = {
+        sender: {
+          email: 'claritydonotreply@gmail.com',
+          name: user.employer_name,
+        },
+        to: [
+          {
+            email: person.email,
+            name: person.full_name,
+          },
+        ],
+        subject: 'Clarity: New Form!',
+        textContent: 'link here',
+        htmlContent: `<h5>Your Clarity Form Link! Fill it out here: ${`http://localhost:3000/employee/` + form_id + '/' + person.id}</h5>`, // i wanna send out a different link to each person in the list
+      };
+      console.log("payload declared")
+      try {
+        const response = await axios.post(brevoApiEndpoint, emailPayload, {
+          headers: {
+            'api-key': apiKey,
+          },
+        });
+    
+        console.log('Email sent successfully:', response.data);
+      } catch (error) {
+        console.error('Failed to send email:', error.response.data);
+      }
+    }
+
+  }
+
+  const handleSubmit = async (event) => {
+    // handleQuestion();
     event.preventDefault();
-    handleClose();
+    var userStr = localStorage.getItem("user");
+    var user = JSON.parse(userStr);
+
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    const mysqlDate = `${year}-${month}-${day}`;
+
+    console.log(mysqlDate); // This will print today's date in MySQL date format
+
+    const res = await axios.post(API + "/form", {
+      title: title,
+      curr_date: mysqlDate,
+      form_description: description,
+      employer_id: user.employer_id,
+      questions: question,
+    });
+    try {
+      const id = res.data.form_id;
+      await sendEmail(id)
+    } catch (e) {
+
+    }
+
+    alert("form sent!")
+    // use email API to send to all employees
+    
     navigate('/');
   };
 

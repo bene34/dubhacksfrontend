@@ -11,6 +11,7 @@ const herokuID = 'https://dh-backend-fr-fd4331759334.herokuapp.com/';
 export const getCompanyAverages = async (companyId) => {
     return await axios.get(herokuID + 'form/empaverages' + '?employer_id=' + companyId)
     .then((res) => {
+        console.log(res.data)
         return (res.data);
     })
     .catch((err) => {
@@ -51,5 +52,6 @@ export const postResponse = async (data) => {
         throw new Error(err);
     });
 }
+
 
 
