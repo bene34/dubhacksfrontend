@@ -25,6 +25,9 @@ const Invite = () => {
             enqueueSnackbar('please format your input properly', { variant: "error" });
         }
         else {
+            //Call API here
+            //on success call the success toast
+            enqueueSnackbar('Employee invitied', { variant: "success" });
             var userStr = localStorage.getItem('user')
             var user = JSON.parse(userStr)
             const id = user.employer_id;
@@ -36,6 +39,7 @@ const Invite = () => {
               })
               alert("employee added!")
               window.location.reload();
+              enqueueSnackbar('Employee invitied', { variant: "success" });
             } catch (e) {
               alert("duplicate email, employee already exists")
               window.location.reload();

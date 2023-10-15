@@ -20,5 +20,38 @@ export const getCompanyAverages = async (companyId) => {
     });
 }
 
+export const getQuestions = async (formId) => {
+    return await axios.get(herokuID + 'form/questions' + '?form_id=' + formId)
+    .then((res) => {
+        return (res.data);
+    })
+    .catch((err) => {
+        console.log(err);
+        throw new Error(err);
+    });
+}
+
+export const getFormByID = async (formId) => {
+    return await axios.get(herokuID + 'form/' + '?form_id=' + formId)
+    .then((res) => {
+        return (res.data);
+    })
+    .catch((err) => {
+        console.log(err);
+        throw new Error(err);
+    });
+}
+
+export const postResponse = async (data) => {
+    return await axios.post(herokuID + 'form/submit', data)
+    .then((res) => {
+        return (res.data);
+    })
+    .catch((err) => {
+        console.log(err);
+        throw new Error(err);
+    });
+}
+
 
 
